@@ -52,6 +52,14 @@ responses: an array of strings with the 50 character-long description of each op
 Only include the JSON. No additional commentary.
 ```
 
+Response:
+
+```
+The CEO choose "{{ option }}".
+
+{{ next_months_action }}
+```
+
 ### Write a Tweet
 
 ```
@@ -64,6 +72,20 @@ You may choose to reference the events in previous months or to not reference th
 Format it as JSON object with one key:
 
 description: a string with the situation's description
+
+Only include the JSON. No additional commentary.
+```
+
+Response:
+
+```
+The CEO tweeted "{{ tweet }}".
+
+In 150 characters, explain how the public responded to that tweet.
+
+Format it as JSON object with one key:
+
+response: a string describing the public's opinion.
 
 Only include the JSON. No additional commentary.
 ```
@@ -84,6 +106,20 @@ description: a string with the situation's description
 Only include the JSON. No additional commentary.
 ```
 
+Response:
+
+```
+The CEO responded by saying "{{ response }}".
+
+In 150 characters, explain how the public responded to that answer.
+
+Format it as JSON object with one key:
+
+response: a string describing the public's opinion.
+
+Only include the JSON. No additional commentary.
+```
+
 ### News Interview
 
 ```
@@ -96,6 +132,20 @@ You may choose to reference the events in previous months or to not reference th
 Format it as JSON object with one key:
 
 description: a string with the situation's description
+
+Only include the JSON. No additional commentary.
+```
+
+Response:
+
+```
+The CEO responded by saying "{{ response }}".
+
+In 150 characters, explain how the public responded to that answer.
+
+Format it as JSON object with one key:
+
+response: a string describing the public's opinion.
 
 Only include the JSON. No additional commentary.
 ```
@@ -116,6 +166,20 @@ description: a string with the situation's description
 Only include the JSON. No additional commentary.
 ```
 
+Response:
+
+```
+The CEO texted this individual "{{ response }}".
+
+What does individual respond with? Don't include any questions in the response.
+
+Format it as JSON object with one key:
+
+response: a string with the individual's response.
+
+Only include the JSON. No additional commentary.
+```
+
 ### Launch a Feature
 
 ```
@@ -125,6 +189,20 @@ Only include the JSON. No additional commentary.
 ```
 
 This task should only ever show up once. It's DevDay.
+
+Response:
+
+```
+The CEO described their new feature as "{{ response }}".
+
+In 150 characters, explain how the public responded to that feature.
+
+Format it as JSON object with one key:
+
+response: a string describing the public's opinion.
+
+Only include the JSON. No additional commentary.
+```
 
 ### Attend a Board Meeting
 
@@ -142,6 +220,20 @@ description: a string with the situation's description
 Only include the JSON. No additional commentary. 
 ```
 
+Response:
+
+```
+The CEO responded by saying "{{ response }}".
+
+In 150 characters, explain how the board responded to that answer.
+
+Format it as JSON object with one key:
+
+response: a string describing the board's opinion.
+
+Only include the JSON. No additional commentary.
+```
+
 ### Team Social
 
 ```
@@ -156,4 +248,34 @@ Format it as JSON object with one key:
 description: a string with the situation's description
 
 Only include the JSON. No additional commentary. 
+```
+
+Response:
+
+```
+The CEO proposed the following social: "{{ response }}".
+
+In 150 characters, explain how the team reacted to the social event.
+
+Format it as JSON object with one key:
+
+response: a string describing the team's opinion.
+
+Only include the JSON. No additional commentary.
+```
+
+## Quarterly Updates
+
+After the action and response in December / March / June / September and December:
+
+```
+As it's {{ month }}, you'll provide a quarterly update. Format it as a JSON array with three keys:
+
+public_confidence: a float ranging from 0 to 1 representing the public's confidence in OpenAI
+
+new_users: the amount of new users for OpenAI this quarter
+
+cash: a positive or negative number representing the amount of money OpenAI lost / gained this quarter
+
+Only include the JSON. No additional commentary.
 ```
