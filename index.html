@@ -418,7 +418,6 @@ document.getElementById('startButton').addEventListener('click', function() {
 
     AFRAME.registerComponent("random-orbs", {
       init: function () {
-        
         fetch("/api/list")
           .then((res) => {
             let res = res.json()
