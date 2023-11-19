@@ -58,6 +58,7 @@
           src="https://michigan-magic.vercel.app/bgaudio.mp3"
         ></audio>
         <audio
+          loop="false"
           id="uploadHere"
           src="https://michigan-magic.vercel.app/uploadHere.mp3"
         ></audio>
@@ -148,6 +149,8 @@
     </a-scene>
   </body>
   <script>
+    let isRecording = false;
+
     document
       .getElementById("startButton")
       .addEventListener("click", function () {
@@ -181,11 +184,12 @@
             .getElementById("recordSphere")
             .setAttribute("color", "#470D1C");
 
-          timer = setTimeout(function () {
-            if (isLooking) {
-              beginRecording(el);
-            }
-          }, 1500); // 3 seconds
+            timer = setTimeout(function () {
+  if (isLooking && !isRecording) {
+    beginRecording(el);
+    isRecording = true; // Set the flag to true as recording starts
+  }
+}, 1500);
         });
 
         el.addEventListener("mouseleave", function () {
@@ -495,6 +499,8 @@
         .catch((err) => ("Error occurred", err));
     }
     function stopRecording(sphereElement) {
+      isRecording = false;
+      
       // Hide the sphere
       document.getElementById("recordSphere").setAttribute("visible", true);
 
