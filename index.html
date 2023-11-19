@@ -418,9 +418,9 @@ document.getElementById('startButton').addEventListener('click', function() {
     AFRAME.registerComponent("random-orbs", {
       init: function () {
         fetch("/api/list")
+          .then((res) => res.json())
           .then((res) => {
-            let result = res.json()
-            let urls = result["data"].map(x => x.url)
+            let urls = res["data"].map(x => x.url)
             for (let i = 0; i < urls.length; i++) {
               // Create a new sphere element
               let orb = document.createElement("a-sphere");
