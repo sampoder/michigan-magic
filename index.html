@@ -464,6 +464,7 @@
               AFRAME.registerComponent(`orb-${i}`, {
                 init: function () {
                   let audio = new Audio(urls[i]);
+                  audio.loop = true;
                   var el = this.el;
                   
                   el.addEventListener("mouseenter", function () {
