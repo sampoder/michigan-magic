@@ -458,13 +458,13 @@
             
               orb.dataset.audio = urls[i];
               orb.setAttribute(`orb-${i}`,'');
+              
               this.el.sceneEl.appendChild(orb);
-              
-              
-              
+            
               AFRAME.registerComponent(`orb-${i}`, {
                 init: function () {
                   let audio = new Audio(urls[i]);
+                  var el = this.el;
                   
                   el.addEventListener("mouseenter", function () {
                     console.log("hi! play.")
