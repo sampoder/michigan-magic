@@ -184,7 +184,7 @@ function playAudio(recorderAudioAsBlob) {
   const formData = new FormData();
   formData.append("files", file);
 
-  fetch("http://localhost:5000/upload", { method: "post", body: formData })
+  fetch("https://vr.underpass.clb.li/upload", { method: "post", body: formData })
     .then((res) => console.log(res))
     .catch((err) => ("Error occurred", err));
 
