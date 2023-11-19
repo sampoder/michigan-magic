@@ -16,6 +16,7 @@
       </button>
       <audio id="welcome" src="https://michigan-magic.vercel.app/welcome.mp3"></audio>
       <audio id="meditationMusic" src="https://michigan-magic.vercel.app/bgaudio.mp3"></audio>
+      <audio id="shareYourAudio" src="https://michigan-magic.vercel.app/bgaudio.mp3"></audio>
 
     </div>
   </div>
@@ -113,8 +114,8 @@ document.getElementById('startButton').addEventListener('click', function() {
         el.addEventListener("mouseenter", function () {
           // User starts looking at the sphere
           isLooking = true;
+          document.getElementById("recordSphere").setAttribute("color", "#470D1C");
 
-          document.getElementById("recordSphere").setAttribute("color", "#fff");
 
 
           timer = setTimeout(function () {
@@ -127,6 +128,8 @@ document.getElementById('startButton').addEventListener('click', function() {
         el.addEventListener("mouseleave", function () {
           // User stops looking at the sphere
           isLooking = false;
+          document.getElementById("recordSphere").setAttribute("color", "#EF2D5E");
+
           clearTimeout(timer);
         });
       },
@@ -277,7 +280,9 @@ document.getElementById('startButton').addEventListener('click', function() {
 
     function beginRecording(sphereElement) {
       // Hide the sphere
+      
       document.getElementById("recordSphere").setAttribute("visible", false);
+
 
       document.getElementById("stopSphere").setAttribute("visible", true);
 
@@ -371,6 +376,7 @@ document.getElementById('startButton').addEventListener('click', function() {
     function stopRecording(sphereElement) {
       // Hide the sphere
       document.getElementById("recordSphere").setAttribute("visible", true);
+
       document.getElementById("stopSphere").setAttribute("visible", false);
       document.getElementById("random-orbs").setAttribute("visible", true);
 
@@ -383,6 +389,7 @@ document.getElementById('startButton').addEventListener('click', function() {
       // Change the sky color to black
       var sky = document.querySelector("a-sky");
       if (sky) {
+
         sky.setAttribute("color", "#eCeCeC");
         sky.setAttribute("visible", "false");
       }
