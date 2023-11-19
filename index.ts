@@ -1,6 +1,6 @@
 import { config } from "dotenv";
 import express from "express";
-import { PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
+import { ListObjectsV2Command, PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
 import { randomUUID } from "crypto";
 import multer from "multer";
 import multerS3 from "multer-s3";
@@ -50,6 +50,19 @@ app.get("/", async (_, res) => {
 
 app.post("/upload", upload.any(), async (req, res) => {
   return res.status(200).send("File uploaded successfully.");
+});
+
+app.get("/list", async (_, res) => {
+  const listObjects = await s3.send(
+    new ListObjectsV2Command({ Bucket: process.env.AWS_BUCKET_NAME as string })
+  );
+
+  return res.status(200).json({
+    data: (listObjects.Contents || []).map((item) => ({
+      ...item,
+      url: `https://${process.env.AWS_BUCKET_NAME}.s3.amazonaws.com/${item.Key}`,
+    })),
+  });
 });
 
 app.listen(process.env.PORT || 5000, () => {
