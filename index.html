@@ -54,6 +54,7 @@
         ></audio>
         <audio
           loop
+          autoplay
           id="meditationMusic"
           src="https://michigan-magic.vercel.app/bgaudio.mp3"
         ></audio>
@@ -362,9 +363,10 @@
 
       console.log("Recording started");
 
+
       var audio3 = document.getElementById("uploadHere");
       audio3.play();
-
+      
       setTimeout(function () {
         //start recording using the audio recording API
         audioRecorder
