@@ -449,9 +449,9 @@
               orb.setAttribute(
                 "animation",
                 `property: position; to: ${
-                  parseFloat(position.split(" ")[0]) + 0.5
-                } ${parseFloat(position.split(" ")[1]) + 0.5} ${
-                  parseFloat(position.split(" ")[2]) + 0.5
+                  parseFloat(position.split(" ")[0]) + 0.25
+                } ${parseFloat(position.split(" ")[1]) + 0.25} ${
+                  parseFloat(position.split(" ")[2]) + 0.25
                 }; dur: 2000; easing: easeInOutQuad; loop: true; dir: alternate`,
               );
               // Append the orb to the scene
@@ -467,12 +467,10 @@
                   var el = this.el;
                   
                   el.addEventListener("mouseenter", function () {
-                    console.log("hi! play.")
                     audio.play();
                   });
               
                   el.addEventListener("mouseleave", function () {
-                    console.log("hi! pause.")
                     audio.pause();
                   });
                 },
