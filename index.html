@@ -85,7 +85,7 @@
   </body>
   <script>
 
-document.getElementById('startButton').addEventListener('click', function() {
+            document.getElementById('startButton').addEventListener('click', function() {
                 var audio = document.getElementById('welcome');
                 audio.play();
                 var audio = document.getElementById('meditationMusic');
@@ -448,9 +448,28 @@ document.getElementById('startButton').addEventListener('click', function() {
                 }; dur: 2000; easing: easeInOutQuad; loop: true; dir: alternate`,
               );
               // Append the orb to the scene
-              
+            
               orb.dataset.audio = urls[i];
+              orb.attr(`orb-${i}`,'');
               this.el.sceneEl.appendChild(orb);
+              
+              
+              
+              AFRAME.registerComponent(`orb-${i}`, {
+                init: function () {
+                  let audio = new Audio(urls[i]);
+                  
+                  el.addEventListener("mouseenter", function () {
+                    console.log("hi! play.")
+                    audio.play();
+                  });
+              
+                  el.addEventListener("mouseleave", function () {
+                    console.log("hi! pause.")
+                    audio.pause();
+                  });
+                },
+              });
             }
             
           })
