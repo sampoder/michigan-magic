@@ -3,10 +3,10 @@ import multer from "multer";
 import multerS3 from "multer-s3";
 
 const s3 = new S3Client({
-	region: process.env.AWS_REGION as string,
+	region: process.env.C_AWS_REGION as string,
 	credentials: {
-		accessKeyId: process.env.AWS_ACCESS_KEY as string,
-		secretAccessKey: process.env.AWS_SECRET_KEY as string,
+		accessKeyId: process.env.C_AWS_ACCESS_KEY as string,
+		secretAccessKey: process.env.C_AWS_SECRET_KEY as string,
 	},
 });
 
@@ -24,7 +24,7 @@ const upload = multer({
 	},
 	storage: multerS3({
 		s3: s3,
-		bucket: process.env.AWS_BUCKET_NAME as string,
+		bucket: process.env.C_AWS_BUCKET_NAME as string,
 		metadata: function (req, file, cb) {
 			cb(null, { name: file.originalname });
 		},
@@ -33,7 +33,6 @@ const upload = multer({
 		},
 	}),
 });
-
 
 export default async (req, res) => {
 	upload.any()(req, res, (err) => {
