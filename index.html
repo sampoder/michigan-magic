@@ -1,0 +1,15 @@
+<html>
+  <head>
+    <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
+  </head>
+  <body>
+    <a-scene>
+        <a-camera>
+            <a-cursor></a-cursor>
+          </a-camera>
+      <a-sphere position="0 1.25 -5" radius="1.25" color="#EF2D5E" event-set__enter="_event: mouseenter; color: yellow"
+      event-set__leave="_event: mouseleave; color: #4CC3D9"></a-sphere>
+      <a-sky color="#fff"></a-sky>
+    </a-scene>
+  </body>
+</html>
