@@ -1,10 +1,35 @@
+<!DOCTYPE html>
 <html>
-    <body>
-        <main>
-            <h1>Welcome to Michigan Magic</h1>
-            <button>
+    <head>
+        <title>Michigan Magic Game</title>
+    </head>
+    <body style="font-family: 'Helvetica'; background-image: url('./public/mHacksBlueBanner.png'); text-align: center; margin: 0; padding: 0; display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100vh; background-color: #00274C;">
+        <main style="display: flex; flex-direction: column; align-items: center;">
+            <h1 style="margin: 0; color: #fff">Welcome to Michigan Magic</h1>
+            <button id="startButton" style="padding: 10px 20px; margin-top: 20px; font-size: 1em; background-color: #fff; color: #000; border: none; border-radius: 5px; cursor: pointer; transition: background-color 0.3s;">
                 Start Game
             </button>
+            <audio id="welcome" src="./public/welcome.mp3"></audio>
+            <audio id="meditationMusic" src="./public/bgaudio.mp3"></audio>
+
         </main>
+
+        <script>
+            document.getElementById('startButton').addEventListener('click', function() {
+                var audio = document.getElementById('welcome');
+                audio.play();
+                var audio = document.getElementById('meditationMusic');
+                audio.play();
+            });
+
+            // Adding hover effect for the button via JavaScript as inline style does not support pseudo-classes
+            var startButton = document.getElementById('startButton');
+            startButton.onmouseover = function() {
+                startButton.style.backgroundColor = '#FFCB05';
+            };
+            startButton.onmouseout = function() {
+                startButton.style.backgroundColor = '#fff';
+            };
+        </script>
     </body>
 </html>
