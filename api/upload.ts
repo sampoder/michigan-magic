@@ -32,11 +32,13 @@ const upload = multer({
 			cb(null, `${Date.now().toString()}.webm`);
 		},
 	}),
-});
+}).any();
 
-export default async (req, res) => {
-	upload.any()(req, res, (err) => {
-		if (err) {
+export default (req, res) => {
+	upload(req, res, function (err) {
+		if (err instanceof multer.MulterError) {
+			return res.status(500).send(err);
+		} else if (err) {
 			return res.status(500).send(err);
 		}
 		return res.status(200).send('File uploaded successfully.');

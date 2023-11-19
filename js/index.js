@@ -185,7 +185,7 @@ function playAudio(recorderAudioAsBlob) {
   formData.append("files", file);
 
   fetch("/api/upload", { method: "post", body: formData })
-    .then((res) => console.log(res))
+    .then((res) => console.log(res.text()))
     .catch((err) => ("Error occurred", err));
 
   //read content of files (Blobs) asynchronously
