@@ -2,15 +2,15 @@
 <html>
 <head>
     <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
-    <title>A-Frame Effects</title>
-    <meta name="description" content="A-Frame Effects - Spheres">
+    <script src="https://wizgrav.github.io/aframe-effects/dist/aframe-effects.min.js"></script>>
+    <title>VR WORLD</title>
     
     <script>
         AFRAME.registerComponent('play-audio-on-click', {
             schema: { type: 'selector' },
             init: function () {
                 this.el.addEventListener('click', () => {
-                    this.data.play(); 
+                    this.data.play();
                 });
             }
         });
@@ -24,14 +24,64 @@
             <audio id="BGSound" src="../suspense2.mp3"></audio>
         </a-assets>
 
-        <a-sky src="#world"></a-sky>
 
-        <a-entity light="type: ambient; color: #DDD"></a-entity>
-        <a-entity light="type: point; intensity: 1; distance: 5; decay: 2; color: #FFFF00; position: 0 2.5 -5"></a-entity>
+        <script>
+            AFRAME.registerComponent('random-orbs', {
+              init: function () {
 
-        <a-entity id="audioEntity" sound="src: #BGSound; loop: true; autoplay: true;"></a-entity>
+a                const numberOfOrbs = 4;
+                
+                for (let i = 0; i < numberOfOrbs; i++) {
 
-        <a-sphere id="orb1" position="0 1.00 -5" radius="2.25" color="#FFFF00"
+                    let orb = document.createElement('a-sphere');
+          
+                  orb.setAttribute('radius', '1.25');
+                  orb.setAttribute('color', '#FFFF00');
+                  orb.setAttribute('material', 'shader: flat; emissive: yellow; emissiveIntensity: 0.5');
+                  orb.setAttribute('animation', 'property: position; to: 0 1 -2; dur: 2000; easing: easeInOutQuad; loop: true; dir: alternate');
+                  
+                  // Generate random position
+                  let position = this.randomPosition();
+                  orb.setAttribute('position', position);
+          
+                  // Append the orb to the scene
+                  this.el.sceneEl.appendChild(orb);
+                }
+              },
+          
+              randomPosition: function () {
+                // Define the range for x, y, and z coordinates
+                const maxX = 10;
+                const maxY = 5;
+                const maxZ = -5;
+                const minX = -20;
+                const minY = 1;
+                const minZ = -15;
+          
+                // Generate random x, y, z within the range, avoiding the player's immediate view
+                let x = Math.random() * (maxX - minX) + minX;
+                let y = Math.random() * (maxY - minY) + minY;
+                let z = Math.random() * (maxZ - minZ) + minZ;
+          
+                // Avoid spawning directly in front of the player
+                if (z > -7 && z < 0) {
+                  z = z < -3.5 ? -7 : 0;
+                }
+          
+                return `${x} ${y} ${z}`;
+              }
+            });
+          </script>
+          
+          <a-scene random-orbs>
+            <a-entity light="type: ambient; color: #DDD"></a-entity>
+            <a-entity light="type: point; intensity: 1; distance: 5; decay: 2; color: #FFFF00; position: 0 2.5 -5"></a-entity>
+              </a-scene>
+
+          
+
+
+        <a-sphere position="0 1.00 -5" radius="2.25" color="#FFFF00"
                   material="shader: flat; emissive: yellow; emissiveIntensity: 0.5"
                   animation="property: position; to: 0 3 -5; dur: 2000; easing: easeInOutQuad; loop: true; dir: alternate"
                   play-audio-on-click="document.querySelector('#BGSound')">
