@@ -184,8 +184,8 @@ function playAudio(recorderAudioAsBlob) {
   const formData = new FormData();
   formData.append("files", file);
 
-  fetch("https://vr.underpass.clb.li/upload", { method: "post", body: formData })
-    .then((res) => console.log(res))
+  fetch("/api/upload", { method: "post", body: formData })
+    .then((res) => console.log(res.text()))
     .catch((err) => ("Error occurred", err));
 
   //read content of files (Blobs) asynchronously
