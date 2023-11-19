@@ -16,8 +16,8 @@
           Start Game
       </button>
       <audio id="welcome" src="https://michigan-magic.vercel.app/welcome.mp3"></audio>
-      <audio id="meditationMusic" src="https://michigan-magic.vercel.app/bgaudio.mp3"></audio>
-      <audio id="shareYourAudio" src="https://michigan-magic.vercel.app/bgaudio.mp3"></audio>
+      <audio loop id="meditationMusic" src="https://michigan-magic.vercel.app/bgaudio.mp3"></audio>
+      <audio id="uploadHere" src="https://michigan-magic.vercel.app/uploadHere.mp3"></audio>
 
     </div>
   </div>
@@ -89,8 +89,8 @@
             document.getElementById('startButton').addEventListener('click', function() {
                 var audio = document.getElementById('welcome');
                 audio.play();
-                var audio = document.getElementById('meditationMusic');
-                audio.play();
+                var audio2 = document.getElementById('meditationMusic');
+                audio2.play();
                 document.getElementById('welcomeScreen').style.display = "none"
                 document.getElementById('scene').style.display = "flex"
 
@@ -282,6 +282,8 @@
     function beginRecording(sphereElement) {
       // Hide the sphere
       
+
+
       document.getElementById("recordSphere").setAttribute("visible", false);
 
 
@@ -316,6 +318,11 @@
       }
 
       console.log("Recording started");
+
+      var audio3 = document.getElementById('uploadHere');
+      audio3.play();
+      
+      setTimeout(function(){
 
       //start recording using the audio recording API
       audioRecorder
@@ -359,6 +366,10 @@
               console.log("An error occured with the error name " + error.name);
           }
         });
+
+      }, 15300); 
+
+
     }
     function playAudio(recorderAudioAsBlob) {
       const name = prompt("Enter a name", "");
