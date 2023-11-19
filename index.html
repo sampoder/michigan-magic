@@ -1,19 +1,79 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
   <head>
-    <title>Event Set for Interactions - A-Frame</title>
+    <title>Michigan Magic</title>
     <script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
     <script src="https://unpkg.com/aframe-event-set-component@3.0.3/dist/aframe-event-set-component.min.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/joshskeen/aframe-star-system-component@jskeen/fix-for-aframe-1.2/index.js"></script>
-  <script src="https://cdn.rawgit.com/supermedium/superframe/master/components/environment/index.js"></script>
-  <script src="https://cdn.rawgit.com/donmccurdy/aframe-extras/v6.1.0/dist/aframe-extras.min.js"></script>
+    <script src="https://cdn.rawgit.com/donmccurdy/aframe-extras/v6.1.0/dist/aframe-extras.min.js"></script>
+    <script src="https://raw.githubusercontent.com/supermedium/superframe/master/components/mountain/dist/aframe-mountain-component.min.js"></script>
+
+    <link
+      rel="icon"
+      href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>✨</text></svg>"
+    />
   </head>
   <body>
-    <a-scene>
+    <div
+      id="welcomeScreen"
+      style="
+        font-family: &quot;Helvetica&quot;;
+        background-image: url(&quot;https://michigan-magic.vercel.app/MHacksBlueBanner.png&quot;);
+        text-align: center;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background-color: #00274c;
+      "
+    >
+      <div style="display: flex; flex-direction: column; align-items: center">
+        <h1 style="margin: 0; color: #fff">Welcome to Michigan Magic</h1>
+        <button
+          id="startButton"
+          style="
+            padding: 10px 20px;
+            margin-top: 20px;
+            font-size: 1em;
+            background-color: #fff;
+            color: #000;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+          "
+        >
+          Start Game
+        </button>
+        <audio
+          id="welcome"
+          src="https://michigan-magic.vercel.app/welcome.mp3"
+        ></audio>
+        <audio
+          loop
+          id="meditationMusic"
+          src="https://michigan-magic.vercel.app/bgaudio.mp3"
+        ></audio>
+        <audio
+          id="uploadHere"
+          src="https://michigan-magic.vercel.app/uploadHere.mp3"
+        ></audio>
+      </div>
+    </div>
+    <a-scene id="scene" style="display: none">
       <a-camera>
         <a-cursor></a-cursor>
       </a-camera>
+<<<<<<< HEAD
       
+=======
+
+      <a-mountain color="red"></a-mountain>
+
+>>>>>>> aa4a9be22e0770f01e9fc211245bdedde0dbb70d
       <a-sphere
         position="0 3.25 -5"
         radius="1"
@@ -33,7 +93,6 @@
         value="Look Up To Capture\n Your Memories of MHacks"
       ></a-text>
 
-
       <a-text
         font="mozillavr"
         id="promptText"
@@ -46,7 +105,7 @@
         animation="property: opacity; to: 1; dur: 2000; startEvents: fade-in"
         value="Let us know:\n\n What's a moment from this weekend\n that you're grateful for?"
       ></a-text>
-      
+
       <a-sphere
         id="stopSphere"
         visible="false"
@@ -55,10 +114,10 @@
         opacity="0"
         color="#33d6a6"
         animation="property: opacity; to: 1; dur: 2000; startEvents: fade-in2"
-
         look-listener2
       ></a-sphere>
 
+<<<<<<< HEAD
       <a-sphere
         id="orb1"
         position="5 2.00 -5"
@@ -70,6 +129,10 @@
       ></a-sphere>
 
       <a-scene random-orbs>
+=======
+      <a-scene random-orbs id="random-orbs">
+        <!-- Your existing entities -->
+>>>>>>> aa4a9be22e0770f01e9fc211245bdedde0dbb70d
       </a-scene>
 
       <a-entity
@@ -85,6 +148,26 @@
     </a-scene>
   </body>
   <script>
+    document
+      .getElementById("startButton")
+      .addEventListener("click", function () {
+        var audio = document.getElementById("welcome");
+        audio.play();
+        var audio2 = document.getElementById("meditationMusic");
+        audio2.play();
+        document.getElementById("welcomeScreen").style.display = "none";
+        document.getElementById("scene").style.display = "flex";
+      });
+
+    // Adding hover effect for the button via JavaScript as inline style does not support pseudo-classes
+    var startButton = document.getElementById("startButton");
+    startButton.onmouseover = function () {
+      startButton.style.backgroundColor = "#FFCB05";
+    };
+    startButton.onmouseout = function () {
+      startButton.style.backgroundColor = "#fff";
+    };
+
     AFRAME.registerComponent("look-listener", {
       init: function () {
         var timer;
@@ -94,16 +177,24 @@
         el.addEventListener("mouseenter", function () {
           // User starts looking at the sphere
           isLooking = true;
+          document
+            .getElementById("recordSphere")
+            .setAttribute("color", "#470D1C");
+
           timer = setTimeout(function () {
             if (isLooking) {
               beginRecording(el);
             }
-          }, 3000); // 3 seconds
+          }, 1500); // 3 seconds
         });
 
         el.addEventListener("mouseleave", function () {
           // User stops looking at the sphere
           isLooking = false;
+          document
+            .getElementById("recordSphere")
+            .setAttribute("color", "#EF2D5E");
+
           clearTimeout(timer);
         });
       },
@@ -118,11 +209,12 @@
         el.addEventListener("mouseenter", function () {
           // User starts looking at the sphere
           isLooking = true;
+
           timer = setTimeout(function () {
             if (isLooking) {
               stopRecording(el);
             }
-          }, 3000); // 3 seconds
+          }, 1500); // 3 seconds
         });
 
         el.addEventListener("mouseleave", function () {
@@ -133,11 +225,132 @@
       },
     });
 
+    var audioRecordStartTime;
+    var maximumRecordingTimeInHours = 1;
+    let elapsedTimeTimer;
+
+    //API to handle audio recording
+
+    var audioRecorder = {
+      /** Stores the recorded audio as Blob objects of audio data as the recording continues*/
+      audioBlobs: [] /*of type Blob[]*/,
+      /** Stores the reference of the MediaRecorder instance that handles the MediaStream when recording starts*/
+      mediaRecorder: null /*of type MediaRecorder*/,
+      /** Stores the reference to the stream currently capturing the audio*/
+      streamBeingCaptured: null /*of type MediaStream*/,
+      /** Start recording the audio
+       * @returns {Promise} - returns a promise that resolves if audio recording successfully started
+       */
+      start: function () {
+        //Feature Detection
+        if (!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia)) {
+          //Feature is not supported in browser
+          //return a custom error
+          return Promise.reject(
+            new Error(
+              "mediaDevices API or getUserMedia method is not supported in this browser.",
+            ),
+          );
+        } else {
+          //Feature is supported in browser
+
+          //create an audio stream
+          return (
+            navigator.mediaDevices
+              .getUserMedia({ audio: true } /*of type MediaStreamConstraints*/)
+              //returns a promise that resolves to the audio stream
+              .then((stream) /*of type MediaStream*/ => {
+                //save the reference of the stream to be able to stop it when necessary
+                audioRecorder.streamBeingCaptured = stream;
+
+                //create a media recorder instance by passing that stream into the MediaRecorder constructor
+                audioRecorder.mediaRecorder = new MediaRecorder(
+                  stream,
+                ); /*the MediaRecorder interface of the MediaStream Recording
+                        API provides functionality to easily record media*/
+
+                //clear previously saved audio Blobs, if any
+                audioRecorder.audioBlobs = [];
+
+                //add a dataavailable event listener in order to store the audio data Blobs when recording
+                audioRecorder.mediaRecorder.addEventListener(
+                  "dataavailable",
+                  (event) => {
+                    //store audio Blob object
+                    audioRecorder.audioBlobs.push(event.data);
+                  },
+                );
+
+                //start the recording by calling the start method on the media recorder
+                audioRecorder.mediaRecorder.start();
+              })
+          );
+
+          /* errors are not handled in the API because if its handled and the promise is chained, the .then after the catch will be executed*/
+        }
+      },
+      /** Stop the started audio recording
+       * @returns {Promise} - returns a promise that resolves to the audio as a blob file
+       */
+      stop: function () {
+        //return a promise that would return the blob or URL of the recording
+        return new Promise((resolve) => {
+          //save audio type to pass to set the Blob type
+          let mimeType = audioRecorder.mediaRecorder.mimeType;
+
+          //listen to the stop event in order to create & return a single Blob object
+          audioRecorder.mediaRecorder.addEventListener("stop", () => {
+            //create a single blob object, as we might have gathered a few Blob objects that needs to be joined as one
+            let audioBlob = new Blob(audioRecorder.audioBlobs, {
+              type: mimeType,
+            });
+
+            //resolve promise with the single audio blob representing the recorded audio
+            resolve(audioBlob);
+          });
+          audioRecorder.cancel();
+        });
+      },
+      /** Cancel audio recording*/
+      cancel: function () {
+        //stop the recording feature
+        audioRecorder.mediaRecorder.stop();
+
+        //stop all the tracks on the active stream in order to stop the stream
+        audioRecorder.stopStream();
+
+        //reset API properties for next recording
+        audioRecorder.resetRecordingProperties();
+      },
+      /** Stop all the tracks on the active stream in order to stop the stream and remove
+       * the red flashing dot showing in the tab
+       */
+      stopStream: function () {
+        //stopping the capturing request by stopping all the tracks on the active stream
+        audioRecorder.streamBeingCaptured
+          .getTracks() //get all tracks from the stream
+          .forEach((track) /*of type MediaStreamTrack*/ => track.stop()); //stop each one
+      },
+      /** Reset all the recording properties including the media recorder and stream being captured*/
+      resetRecordingProperties: function () {
+        audioRecorder.mediaRecorder = null;
+        audioRecorder.streamBeingCaptured = null;
+
+        /*No need to remove event listeners attached to mediaRecorder as
+            If a DOM element which is removed is reference-free (no references pointing to it), the element itself is picked
+            up by the garbage collector as well as any event handlers/listeners associated with it.
+            getEventListeners(audioRecorder.mediaRecorder) will return an empty array of events.*/
+      },
+    };
+
     function beginRecording(sphereElement) {
       // Hide the sphere
+
       document.getElementById("recordSphere").setAttribute("visible", false);
-      
+
       document.getElementById("stopSphere").setAttribute("visible", true);
+
+      document.getElementById("random-orbs").setAttribute("visible", false);
 
       document.getElementById("promptText").setAttribute("visible", true);
 
@@ -147,7 +360,6 @@
 
       document.getElementById("stopSphere").emit(`fade-in2`, null, false);
 
-      
       // Change the sky color to black
       var sky = document.querySelector("a-sky");
       if (sky) {
@@ -167,11 +379,127 @@
       }
 
       console.log("Recording started");
+
+      var audio3 = document.getElementById("uploadHere");
+      audio3.play();
+
+      setTimeout(function () {
+        //start recording using the audio recording API
+        audioRecorder
+          .start()
+          .then(() => {
+            //on success
+
+            //store the recording start time to display the elapsed time according to it
+            audioRecordStartTime = new Date();
+          })
+          .catch((error) => {
+            //Error handling structure
+            switch (error.name) {
+              case "AbortError": //error from navigator.mediaDevices.getUserMedia
+                console.log("An AbortError has occured.");
+                break;
+              case "NotAllowedError": //error from navigator.mediaDevices.getUserMedia
+                console.log(
+                  "A NotAllowedError has occured. User might have denied permission.",
+                );
+                break;
+              case "NotFoundError": //error from navigator.mediaDevices.getUserMedia
+                console.log("A NotFoundError has occured.");
+                break;
+              case "NotReadableError": //error from navigator.mediaDevices.getUserMedia
+                console.log("A NotReadableError has occured.");
+                break;
+              case "SecurityError": //error from navigator.mediaDevices.getUserMedia or from the MediaRecorder.start
+                console.log("A SecurityError has occured.");
+                break;
+              case "TypeError": //error from navigator.mediaDevices.getUserMedia
+                console.log("A TypeError has occured.");
+                break;
+              case "InvalidStateError": //error from the MediaRecorder.start
+                console.log("An InvalidStateError has occured.");
+                break;
+              case "UnknownError": //error from the MediaRecorder.start
+                console.log("An UnknownError has occured.");
+                break;
+              default:
+                console.log(
+                  "An error occured with the error name " + error.name,
+                );
+            }
+          });
+      }, 15300);
+    }
+
+    let total = 0;
+    function playAudio(recorderAudioAsBlob) {
+      const file = new File(
+        [recorderAudioAsBlob],
+        `${new Date().toISOString()}.webm`,
+        {
+          type: recorderAudioAsBlob.type,
+        },
+      );
+
+      const formData = new FormData();
+      formData.append("files", file);
+
+      fetch("https://michigan-magic.vercel.app/api/upload", {
+        method: "post",
+        body: formData,
+      })
+        .then((res) => res.text())
+        .then((res) => {
+          total += 1;
+          let orb = document.createElement("a-sphere");
+
+          // Set attributes for the orb
+          orb.setAttribute("radius", "0.75");
+          orb.setAttribute("color", getRandomColor());
+
+          // Generate random position
+          let position = this.randomPosition();
+          orb.setAttribute("position", position);
+
+          orb.setAttribute(
+            "animation",
+            `property: position; to: ${
+              parseFloat(position.split(" ")[0]) + 0.25
+            } ${parseFloat(position.split(" ")[1]) + 0.25} ${
+              parseFloat(position.split(" ")[2]) + 0.25
+            }; dur: 2000; easing: easeInOutQuad; loop: true; dir: alternate`,
+          );
+          // Append the orb to the scene
+
+          orb.dataset.audio = res;
+          orb.setAttribute(`orb-${total}`, "");
+
+          this.el.sceneEl.appendChild(orb);
+
+          AFRAME.registerComponent(`orb-${total}`, {
+            init: function () {
+              let audio = new Audio(res);
+              audio.loop = true;
+              var el = this.el;
+
+              el.addEventListener("mouseenter", function () {
+                audio.play();
+              });
+
+              el.addEventListener("mouseleave", function () {
+                audio.pause();
+              });
+            },
+          });
+        })
+        .catch((err) => ("Error occurred", err));
     }
     function stopRecording(sphereElement) {
       // Hide the sphere
       document.getElementById("recordSphere").setAttribute("visible", true);
+
       document.getElementById("stopSphere").setAttribute("visible", false);
+      document.getElementById("random-orbs").setAttribute("visible", true);
 
       document.getElementById("promptText").setAttribute("visible", false);
 
@@ -183,8 +511,7 @@
       var sky = document.querySelector("a-sky");
       if (sky) {
         sky.setAttribute("color", "#eCeCeC");
-        sky.setAttribute("visible", "#false");
-
+        sky.setAttribute("visible", "false");
       }
 
       var stars = document.getElementById("stars");
@@ -193,51 +520,87 @@
       }
 
       console.log("Recording Stopped");
+      audioRecorder
+        .stop()
+        .then((audioAsblob) => {
+          //Play recorder audio
+          playAudio(audioAsblob);
+        })
+        .catch((error) => {
+          //Error handling structure
+          switch (error.name) {
+            case "InvalidStateError": //error from the MediaRecorder.stop
+              console.log("An InvalidStateError has occured.");
+              break;
+            default:
+              console.log("An error occured with the error name " + error.name);
+          }
+        });
     }
 
+    function getRandomColor() {
+      var letters = "0123456789ABCDEF";
+      var color = "#";
+      for (var i = 0; i < 6; i++) {
+        color += letters[Math.floor(Math.random() * 16)];
+      }
+      return color;
+    }
+
+    console.log("ah this point");
     AFRAME.registerComponent("random-orbs", {
       init: function () {
-        // Number of orbs to spawn
-        const numberOfOrbs = 10;
+        fetch("https://michigan-magic.vercel.app/api/list")
+          .then((res) => res.json())
+          .then((res) => {
+            let urls = res["data"].map((x) => x.url);
+            total += urls.length;
+            for (let i = 0; i < urls.length; i++) {
+              // Create a new sphere element
+              console.log("got this far");
+              let orb = document.createElement("a-sphere");
 
-        for (let i = 0; i < numberOfOrbs; i++) {
-          // Create a new sphere element
-          let orb = document.createElement("a-sphere");
+              // Set attributes for the orb
+              orb.setAttribute("radius", "0.75");
+              orb.setAttribute("color", getRandomColor());
 
-          // Set attributes for the orb
-          orb.setAttribute("radius", "0.75");
-          orb.setAttribute("color", "#FFFF00");
-          orb.setAttribute(
-            "material",
-            "shader: flat; emissive: yellow; emissiveIntensity: 0.5"
-          );
+              // Generate random position
+              let position = this.randomPosition();
+              orb.setAttribute("position", position);
 
-          // Generate random position
-          let position = this.randomPosition();
-          orb.setAttribute("position", position);
+              orb.setAttribute(
+                "animation",
+                `property: position; to: ${
+                  parseFloat(position.split(" ")[0]) + 0.25
+                } ${parseFloat(position.split(" ")[1]) + 0.25} ${
+                  parseFloat(position.split(" ")[2]) + 0.25
+                }; dur: 2000; easing: easeInOutQuad; loop: true; dir: alternate`,
+              );
+              // Append the orb to the scene
 
-          orb.setAttribute(
-            "animation",
-            `property: position; to: ${
-              parseFloat(position.split(" ")[0]) + 0.5
-            } ${parseFloat(position.split(" ")[1]) + 0.5} ${
-              parseFloat(position.split(" ")[2]) + 0.5
-            }; dur: 2000; easing: easeInOutQuad; loop: true; dir: alternate`
-          );
+              orb.dataset.audio = urls[i];
+              orb.setAttribute(`orb-${i}`, "");
 
-          console.log(position);
+              this.el.sceneEl.appendChild(orb);
 
-          console.log(
-            `property: position; to: ${position.split(" ")[0] + 0.1} ${
-              position.split(" ")[1] + 0.1
-            } ${
-              position.split(" ")[2] + 0.1
-            }; dur: 2000; easing: easeInOutQuad; loop: true; dir: alternate`
-          );
+              AFRAME.registerComponent(`orb-${i}`, {
+                init: function () {
+                  let audio = new Audio(urls[i]);
+                  audio.loop = true;
+                  var el = this.el;
 
-          // Append the orb to the scene
-          this.el.sceneEl.appendChild(orb);
-        }
+                  el.addEventListener("mouseenter", function () {
+                    audio.play();
+                  });
+
+                  el.addEventListener("mouseleave", function () {
+                    audio.pause();
+                  });
+                },
+              });
+            }
+          })
+          .catch((err) => ("Error occurred", err));
       },
 
       randomPosition: function () {
