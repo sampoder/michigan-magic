@@ -69,13 +69,9 @@
       <a-camera>
         <a-cursor></a-cursor>
       </a-camera>
-<<<<<<< HEAD
-      
-=======
 
       <a-mountain color="red"></a-mountain>
 
->>>>>>> aa4a9be22e0770f01e9fc211245bdedde0dbb70d
       <a-sphere
         position="0 3.25 -5"
         radius="1"
@@ -173,8 +169,8 @@
 
             timer = setTimeout(function () {
   if (isLooking && !isRecording) {
-    beginRecording(el);
     isRecording = true; // Set the flag to true as recording starts
+    beginRecording(el);
   }
 }, 1500);
         });
@@ -333,10 +329,9 @@
             getEventListeners(audioRecorder.mediaRecorder) will return an empty array of events.*/
       },
     };
-
     function beginRecording(sphereElement) {
       // Hide the sphere
-
+      
       document.getElementById("recordSphere").setAttribute("visible", false);
 
       document.getElementById("stopSphere").setAttribute("visible", true);
@@ -371,7 +366,7 @@
 
       console.log("Recording started");
 
-
+      
       var audio3 = document.getElementById("uploadHere");
       audio3.play();
       
