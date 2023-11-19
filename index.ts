@@ -1,13 +1,14 @@
+import { ListObjectsV2Command, S3Client } from "@aws-sdk/client-s3";
+import cors from "cors";
 import { config } from "dotenv";
 import express from "express";
-import { ListObjectsV2Command, PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
-import { randomUUID } from "crypto";
 import multer from "multer";
 import multerS3 from "multer-s3";
 
 config();
 const app = express();
 app.use(express.static("public"));
+app.use(cors())
 
 if (!process.env.AWS_REGION || !process.env.AWS_ACCESS_KEY || !process.env.AWS_SECRET_KEY)
   throw new Error("AWS credentials not found in .env file");
