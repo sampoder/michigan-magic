@@ -5,7 +5,6 @@
     <script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
     <script src="https://unpkg.com/aframe-event-set-component@3.0.3/dist/aframe-event-set-component.min.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/joshskeen/aframe-star-system-component@jskeen/fix-for-aframe-1.2/index.js"></script>
-    <script src="https://cdn.rawgit.com/supermedium/superframe/master/components/environment/index.js"></script>
     <script src="https://cdn.rawgit.com/donmccurdy/aframe-extras/v6.1.0/dist/aframe-extras.min.js"></script>
   </head>
   <body>
@@ -420,8 +419,8 @@ document.getElementById('startButton').addEventListener('click', function() {
       init: function () {
         fetch("/api/list")
           .then((res) => {
-            let res = res.json()
-            let urls = res["data"].map(x => x.url)
+            let result = res.json()
+            let urls = result["data"].map(x => x.url)
             for (let i = 0; i < urls.length; i++) {
               // Create a new sphere element
               let orb = document.createElement("a-sphere");
