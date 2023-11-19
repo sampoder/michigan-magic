@@ -411,6 +411,8 @@
                 }; dur: 2000; easing: easeInOutQuad; loop: true; dir: alternate`,
               );
               // Append the orb to the scene
+              
+              orb.dataset.audio = urls[i];
               this.el.sceneEl.appendChild(orb);
             }
             
