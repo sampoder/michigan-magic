@@ -388,7 +388,61 @@
       formData.append("files", file);
 
       fetch("https://michigan-magic.vercel.app/api/upload", { method: "post", body: formData })
-        .then((res) => console.log(res))
+        .then((res) => {
+          fetch("https://michigan-magic.vercel.app/api/list")
+          .then((res) => res.json())
+          .then((res) => {
+            let urls = res["data"]
+            for (let i = 0; i < urls.length; i++) {
+              
+              if([...document.querySelectorAll('a-sphere')].some(element => element.hasAttribute(`orb-${urls[i].ETag}`)).length == 0){
+                // Create a new sphere element
+                let orb = document.createElement("a-sphere");
+              
+                // Set attributes for the orb
+                orb.setAttribute("radius", "0.75");
+                orb.setAttribute("color", getRandomColor());
+              
+                // Generate random position
+                let position = this.randomPosition();
+                orb.setAttribute("position", position);
+              
+                orb.setAttribute(
+                  "animation",
+                  `property: position; to: ${
+                    parseFloat(position.split(" ")[0]) + 0.25
+                  } ${parseFloat(position.split(" ")[1]) + 0.25} ${
+                    parseFloat(position.split(" ")[2]) + 0.25
+                  }; dur: 2000; easing: easeInOutQuad; loop: true; dir: alternate`,
+                );
+                // Append the orb to the scene
+              
+                orb.dataset.audio = urls[i].url;
+                orb.setAttribute(`orb-${urls[i].ETag}`,'');
+                
+                this.el.sceneEl.appendChild(orb);
+              
+                AFRAME.registerComponent(`orb-${urls[i].ETag}`, {
+                  init: function () {
+                    let audio = new Audio(urls[i].url);
+                    audio.loop = true;
+                    var el = this.el;
+                    
+                    el.addEventListener("mouseenter", function () {
+                      audio.play();
+                    });
+                
+                    el.addEventListener("mouseleave", function () {
+                      audio.pause();
+                    });
+                  },
+                });
+              }
+            }
+            
+          })
+          .catch((err) => ("Error occurred", err));
+        })
         .catch((err) => ("Error occurred", err));
     }
     function stopRecording(sphereElement) {
@@ -450,7 +504,7 @@
         fetch("https://michigan-magic.vercel.app/api/list")
           .then((res) => res.json())
           .then((res) => {
-            let urls = res["data"].map(x => x.url)
+            let urls = res["data"]
             for (let i = 0; i < urls.length; i++) {
               // Create a new sphere element
               let orb = document.createElement("a-sphere");
@@ -473,14 +527,15 @@
               );
               // Append the orb to the scene
             
-              orb.dataset.audio = urls[i];
-              orb.setAttribute(`orb-${i}`,'');
+              orb.dataset.audio = urls[i].url;
+              orb.setAttribute(`orb-${urls[i].ETag}`,'');
               
               this.el.sceneEl.appendChild(orb);
             
-              AFRAME.registerComponent(`orb-${i}`, {
+              AFRAME.registerComponent(`orb-${urls[i].ETag}`, {
                 init: function () {
-                  let audio = new Audio(urls[i]);
+                  let audio = new Audio(urls[i].url);
+                  audio.loop = true;
                   var el = this.el;
                   
                   el.addEventListener("mouseenter", function () {
