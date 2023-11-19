@@ -34,13 +34,16 @@ const upload = multer({
 	}),
 }).any();
 
-export default (req, res) => {
-	upload(req, res, function (err) {
-		if (err instanceof multer.MulterError) {
-			return res.status(500).send(err);
-		} else if (err) {
-			return res.status(500).send(err);
-		}
-		return res.status(200).send('File uploaded successfully.');
-	})
-}
+export default async (req, res) => {
+  upload(req, res, async (err) => {
+    if (err instanceof multer.MulterError) {
+      return res.status(500).send(err);
+    } else if (err) {
+      return res.status(500).send(err);
+    }
+
+    return res
+      .status(200)
+      .send(`https://${process.env.C_AWS_BUCKET_NAME}.s3.amazonaws.com/${req.files[0].originalname}`);
+  });
+};
