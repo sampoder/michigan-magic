@@ -114,6 +114,10 @@ document.getElementById('startButton').addEventListener('click', function() {
         el.addEventListener("mouseenter", function () {
           // User starts looking at the sphere
           isLooking = true;
+
+          document.getElementById("recordSphere").setAttribute("color", "#fff");
+
+
           timer = setTimeout(function () {
             if (isLooking) {
               beginRecording(el);
@@ -138,6 +142,7 @@ document.getElementById('startButton').addEventListener('click', function() {
         el.addEventListener("mouseenter", function () {
           // User starts looking at the sphere
           isLooking = true;
+
           timer = setTimeout(function () {
             if (isLooking) {
               stopRecording(el);
