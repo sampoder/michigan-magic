@@ -86,7 +86,7 @@
   </body>
   <script>
 
-document.getElementById('startButton').addEventListener('click', function() {
+            document.getElementById('startButton').addEventListener('click', function() {
                 var audio = document.getElementById('welcome');
                 audio.play();
                 var audio2 = document.getElementById('meditationMusic');
@@ -460,15 +460,32 @@ document.getElementById('startButton').addEventListener('click', function() {
               orb.setAttribute(
                 "animation",
                 `property: position; to: ${
-                  parseFloat(position.split(" ")[0]) + 0.5
-                } ${parseFloat(position.split(" ")[1]) + 0.5} ${
-                  parseFloat(position.split(" ")[2]) + 0.5
+                  parseFloat(position.split(" ")[0]) + 0.25
+                } ${parseFloat(position.split(" ")[1]) + 0.25} ${
+                  parseFloat(position.split(" ")[2]) + 0.25
                 }; dur: 2000; easing: easeInOutQuad; loop: true; dir: alternate`,
               );
               // Append the orb to the scene
-              
+            
               orb.dataset.audio = urls[i];
+              orb.setAttribute(`orb-${i}`,'');
+              
               this.el.sceneEl.appendChild(orb);
+            
+              AFRAME.registerComponent(`orb-${i}`, {
+                init: function () {
+                  let audio = new Audio(urls[i]);
+                  var el = this.el;
+                  
+                  el.addEventListener("mouseenter", function () {
+                    audio.play();
+                  });
+              
+                  el.addEventListener("mouseleave", function () {
+                    audio.pause();
+                  });
+                },
+              });
             }
             
           })
