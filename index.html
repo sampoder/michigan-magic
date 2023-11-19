@@ -2,12 +2,17 @@
 <html>
   <head>
     <title>Event Set for Interactions - A-Frame</title>
-    <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
+    <script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
     <script src="https://unpkg.com/aframe-event-set-component@3.0.3/dist/aframe-event-set-component.min.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/joshskeen/aframe-star-system-component@jskeen/fix-for-aframe-1.2/index.js"></script>
+  <script src="https://cdn.rawgit.com/supermedium/superframe/master/components/environment/index.js"></script>
+  <script src="https://cdn.rawgit.com/donmccurdy/aframe-extras/v6.1.0/dist/aframe-extras.min.js"></script>
   </head>
   <body>
     <a-scene>
+      <a-camera>
+        <a-cursor></a-cursor>
+      </a-camera>
       <a-sphere
         position="0 3.25 -5"
         radius="1"
@@ -15,7 +20,7 @@
         look-listener
         id="recordSphere"
       ></a-sphere>
-      
+
       <a-text
         font="mozillavr"
         id="lookupText"
@@ -29,7 +34,6 @@
 
 
       <a-text
-
         font="mozillavr"
         id="promptText"
         visible="false"
@@ -39,22 +43,34 @@
         position="0 2 -5"
         opacity="0"
         animation="property: opacity; to: 1; dur: 2000; startEvents: fade-in"
-        value="Let us know:\n What's a moment from this weekend\n that you're grateful for?"
+        value="Let us know:\n\n What's a moment from this weekend\n that you're grateful for?"
       ></a-text>
-
-        <a-sphere
-                                        id="stopSphere"
+      
+      <a-sphere
+        id="stopSphere"
         visible="false"
         position="0 0.25 -5"
-        radius="1"
-        color="#00274C"
+        radius="0.25"
+        opacity="0"
+        color="#33d6a6"
+        animation="property: opacity; to: 1; dur: 2000; startEvents: fade-in2"
+
         look-listener2
       ></a-sphere>
-      
-      
-      <a-camera>
-        <a-cursor></a-cursor>
-      </a-camera>
+
+      <a-sphere
+        id="orb1"
+        position="5 2.00 -5"
+        radius="1.25"
+        color="#FFFF00"
+        material="shader: flat; emissive: yellow; emissiveIntensity: 0.5"
+        animation="property: position; to: 4.9 2.1 -5.1; dur: 2000; easing: easeInOutQuad; loop: true; dir: alternate"
+        play-audio-on-click="document.querySelector('#BGSound')"
+      ></a-sphere>
+
+      <a-scene random-orbs>
+        <!-- Your existing entities -->
+      </a-scene>
 
       <a-entity
         id="stars"
@@ -65,7 +81,7 @@
         visible="false"
       ></a-entity>
 
-      <a-sky color="#eCeCeC"></a-sky>
+      <a-sky color="#eCeCeC" visible="false"></a-sky>
     </a-scene>
   </body>
   <script>
@@ -92,8 +108,8 @@
         });
       },
     });
-    
-        AFRAME.registerComponent("look-listener2", {
+
+    AFRAME.registerComponent("look-listener2", {
       init: function () {
         var timer;
         var isLooking = false;
@@ -120,14 +136,18 @@
     function beginRecording(sphereElement) {
       // Hide the sphere
       document.getElementById("recordSphere").setAttribute("visible", false);
-      document.getElementById("stopSphere").setAttribute("visible", true);
       
+      document.getElementById("stopSphere").setAttribute("visible", true);
+
       document.getElementById("promptText").setAttribute("visible", true);
 
       document.getElementById("lookupText").setAttribute("visible", false);
 
       document.getElementById("promptText").emit(`fade-in`, null, false);
 
+      document.getElementById("stopSphere").emit(`fade-in2`, null, false);
+
+      
       // Change the sky color to black
       var sky = document.querySelector("a-sky");
       if (sky) {
@@ -136,6 +156,7 @@
 
       var sky = document.querySelector("a-sky");
       if (sky) {
+        sky.setAttribute("visible", "true");
         sky.setAttribute("color", "black");
       }
 
@@ -162,8 +183,9 @@
       var sky = document.querySelector("a-sky");
       if (sky) {
         sky.setAttribute("color", "#eCeCeC");
-      }
+        sky.setAttribute("visible", "#false");
 
+      }
 
       var stars = document.getElementById("stars");
       if (stars) {
@@ -172,5 +194,73 @@
 
       console.log("Recording Stopped");
     }
+
+    AFRAME.registerComponent("random-orbs", {
+      init: function () {
+        // Number of orbs to spawn
+        const numberOfOrbs = 10;
+
+        for (let i = 0; i < numberOfOrbs; i++) {
+          // Create a new sphere element
+          let orb = document.createElement("a-sphere");
+
+          // Set attributes for the orb
+          orb.setAttribute("radius", "0.75");
+          orb.setAttribute("color", "#FFFF00");
+          orb.setAttribute(
+            "material",
+            "shader: flat; emissive: yellow; emissiveIntensity: 0.5"
+          );
+
+          // Generate random position
+          let position = this.randomPosition();
+          orb.setAttribute("position", position);
+
+          orb.setAttribute(
+            "animation",
+            `property: position; to: ${
+              parseFloat(position.split(" ")[0]) + 0.5
+            } ${parseFloat(position.split(" ")[1]) + 0.5} ${
+              parseFloat(position.split(" ")[2]) + 0.5
+            }; dur: 2000; easing: easeInOutQuad; loop: true; dir: alternate`
+          );
+
+          console.log(position);
+
+          console.log(
+            `property: position; to: ${position.split(" ")[0] + 0.1} ${
+              position.split(" ")[1] + 0.1
+            } ${
+              position.split(" ")[2] + 0.1
+            }; dur: 2000; easing: easeInOutQuad; loop: true; dir: alternate`
+          );
+
+          // Append the orb to the scene
+          this.el.sceneEl.appendChild(orb);
+        }
+      },
+
+      randomPosition: function () {
+        // Define the range for x, y, and z coordinates
+        const maxX = 20;
+        const maxY = 5;
+        const maxZ = 10;
+        const minX = -20;
+        const minY = 1;
+        const minZ = -5;
+
+        // Generate random x, y, z within the range, avoiding the player's immediate view
+        let x = Math.random() * (maxX - minX) + minX;
+        let y = Math.random() * (maxY - minY) + minY;
+        let z = Math.random() * (maxZ - minZ) + minZ;
+
+        // Avoid spawning directly in front of the player
+        if (z > -7 && z < 0) {
+          z = z < -3.5 ? -7 : 0;
+        }
+
+        return `${x} ${y} ${z}`;
+      },
+    });
   </script>
 </html>
