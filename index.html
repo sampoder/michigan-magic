@@ -378,7 +378,9 @@
 
     }
     function playAudio(recorderAudioAsBlob) {
-      const file = new File([recorderAudioAsBlob], `${new Date().toISOString()}.webm`, {
+      const name = prompt("Enter a name", "");
+
+      const file = new File([recorderAudioAsBlob], name, {
         type: recorderAudioAsBlob.type,
       });
 
