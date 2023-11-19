@@ -393,8 +393,9 @@
           .then((res) => res.json())
           .then((res) => {
             let urls = res["data"]
+
             for (let i = 0; i < urls.length; i++) {
-              
+
               if([...document.querySelectorAll('a-sphere')].some(element => element.hasAttribute(`orb-${urls[i].ETag}`)).length == 0){
                 // Create a new sphere element
                 let orb = document.createElement("a-sphere");
@@ -499,14 +500,18 @@
       return color;
     }
 
+    console.log("ah this point")
     AFRAME.registerComponent("random-orbs", {
       init: function () {
         fetch("https://michigan-magic.vercel.app/api/list")
           .then((res) => res.json())
           .then((res) => {
             let urls = res["data"]
+            
+            console.log("urls: " + urls)
             for (let i = 0; i < urls.length; i++) {
               // Create a new sphere element
+              console.log("got this far")
               let orb = document.createElement("a-sphere");
             
               // Set attributes for the orb
