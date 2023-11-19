@@ -8,14 +8,14 @@
     <script src="https://cdn.rawgit.com/donmccurdy/aframe-extras/v6.1.0/dist/aframe-extras.min.js"></script>
   </head>
   <body>
-    <div id="welcomeScreen" style="font-family: 'Helvetica'; background-image: url('/MHacksBlueBanner.png'); text-align: center; margin: 0; padding: 0; display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100vh; background-color: #00274C;">
+    <div id="welcomeScreen" style="font-family: 'Helvetica'; background-image: url('https://michigan-magic.vercel.app/MHacksBlueBanner.png'); text-align: center; margin: 0; padding: 0; display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100vh; background-color: #00274C;">
     <div style="display: flex; flex-direction: column; align-items: center;">
       <h1 style="margin: 0; color: #fff">Welcome to Michigan Magic</h1>
       <button id="startButton" style="padding: 10px 20px; margin-top: 20px; font-size: 1em; background-color: #fff; color: #000; border: none; border-radius: 5px; cursor: pointer; transition: background-color 0.3s;">
           Start Game
       </button>
-      <audio id="welcome" src="/welcome.mp3"></audio>
-      <audio id="meditationMusic" src="/bgaudio.mp3"></audio>
+      <audio id="welcome" src="https://michigan-magic.vercel.app/welcome.mp3"></audio>
+      <audio id="meditationMusic" src="https://michigan-magic.vercel.app/bgaudio.mp3"></audio>
 
     </div>
   </div>
@@ -364,7 +364,7 @@ document.getElementById('startButton').addEventListener('click', function() {
       const formData = new FormData();
       formData.append("files", file);
 
-      fetch("/api/upload", { method: "post", body: formData })
+      fetch("https://michigan-magic.vercel.app/api/upload", { method: "post", body: formData })
         .then((res) => console.log(res))
         .catch((err) => ("Error occurred", err));
     }
@@ -422,7 +422,7 @@ document.getElementById('startButton').addEventListener('click', function() {
 
     AFRAME.registerComponent("random-orbs", {
       init: function () {
-        fetch("/api/list")
+        fetch("https://michigan-magic.vercel.app/api/list")
           .then((res) => res.json())
           .then((res) => {
             let urls = res["data"].map(x => x.url)
