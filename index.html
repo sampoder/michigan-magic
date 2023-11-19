@@ -169,7 +169,6 @@
 
             timer = setTimeout(function () {
   if (isLooking && !isRecording) {
-    isRecording = true; // Set the flag to true as recording starts
     beginRecording(el);
   }
 }, 1500);
@@ -331,7 +330,9 @@
     };
     function beginRecording(sphereElement) {
       // Hide the sphere
-      
+      if(!isRecording){
+      isRecording = true; // Set the flag to true as recording starts
+
       document.getElementById("recordSphere").setAttribute("visible", false);
 
       document.getElementById("stopSphere").setAttribute("visible", true);
@@ -417,7 +418,7 @@
           });
       }, 15300);
     }
-
+    }
     let total = 0;
     function playAudio(recorderAudioAsBlob) {
       const file = new File(
