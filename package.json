@@ -1,12 +1,8 @@
 {
   "name": "magic",
   "version": "1.0.0",
-  "repository": "git@github.com:sampoder/after-sam.git",
+  "repository": "git@github.com:sampoder/michigan-magic.git",
   "license": "MIT",
-  "scripts": {
-    "start": "tsx index.ts",
-    "dev": "tsx watch index.ts"
-  },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.454.0",
     "multer": "^1.4.5-lts.1",
