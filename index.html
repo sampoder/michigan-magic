@@ -89,6 +89,19 @@
         position="0 2 -5"
         value="Look Up To Capture\n Your Memories of MHacks"
       ></a-text>
+      <a-text
+      font="mozillavr"
+      id="stopRecordingText"
+      visible="true"
+      color="#fff"
+      align="center"
+      anchor="center"
+      position="1.5 0.25 -5"
+      animation="property: opacity; to: 1; dur: 2000; startEvents: fade-in3"
+      opacity="0"
+      animation="property: opacity; to: 1; dur: 2000; startEvents: fade-in"
+      value="< Look Here To Upload"
+    ></a-text>
 
       <a-text
         font="mozillavr"
@@ -346,6 +359,11 @@
 
       document.getElementById("stopSphere").emit(`fade-in2`, null, false);
 
+      document.getElementById("stopRecordingText").setAttribute("visible", true);
+
+
+      document.getElementById("stopRecordingText").emit(`fade-in3`, null, false);
+
       // Change the sky color to black
       var sky = document.querySelector("a-sky");
       if (sky) {
@@ -484,6 +502,8 @@
     function stopRecording(sphereElement) {
       isRecording = false;
       
+      document.getElementById("stopRecordingText").setAttribute("visible", false);
+
       // Hide the sphere
       document.getElementById("recordSphere").setAttribute("visible", true);
 
