@@ -17,6 +17,7 @@
       </button>
       <audio id="welcome" src="https://michigan-magic.vercel.app/welcome.mp3"></audio>
       <audio id="meditationMusic" src="https://michigan-magic.vercel.app/bgaudio.mp3"></audio>
+      <audio id="shareYourAudio" src="https://michigan-magic.vercel.app/bgaudio.mp3"></audio>
 
     </div>
   </div>
@@ -114,8 +115,8 @@
         el.addEventListener("mouseenter", function () {
           // User starts looking at the sphere
           isLooking = true;
+          document.getElementById("recordSphere").setAttribute("color", "#470D1C");
 
-          document.getElementById("recordSphere").setAttribute("color", "#fff");
 
 
           timer = setTimeout(function () {
@@ -128,6 +129,8 @@
         el.addEventListener("mouseleave", function () {
           // User stops looking at the sphere
           isLooking = false;
+          document.getElementById("recordSphere").setAttribute("color", "#EF2D5E");
+
           clearTimeout(timer);
         });
       },
@@ -278,7 +281,9 @@
 
     function beginRecording(sphereElement) {
       // Hide the sphere
+      
       document.getElementById("recordSphere").setAttribute("visible", false);
+
 
       document.getElementById("stopSphere").setAttribute("visible", true);
 
@@ -372,6 +377,7 @@
     function stopRecording(sphereElement) {
       // Hide the sphere
       document.getElementById("recordSphere").setAttribute("visible", true);
+
       document.getElementById("stopSphere").setAttribute("visible", false);
       document.getElementById("random-orbs").setAttribute("visible", true);
 
@@ -384,6 +390,7 @@
       // Change the sky color to black
       var sky = document.querySelector("a-sky");
       if (sky) {
+
         sky.setAttribute("color", "#eCeCeC");
         sky.setAttribute("visible", "false");
       }
