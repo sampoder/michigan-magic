@@ -1,0 +1,60 @@
+<!-- a very basic page made by our good friend GPT -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>All The Audio Files</title>
+	<style>
+		/* Add some basic styling */
+		.audio-container {
+			margin-bottom: 20px;
+		}
+	</style>
+</head>
+<body>
+	<h1>Audio Players</h1>
+	<div id="audioList"></div>
+
+	<script>
+		// Fetch data from the API
+		fetch('/api/list')
+			.then(response => response.json())
+			.then(data => {
+				// Get the container to display audio players
+				const audioListContainer = document.getElementById('audioList');
+
+				// Iterate through the data and create audio players
+				data.data.forEach(item => {
+					const audioContainer = document.createElement('div');
+					audioContainer.classList.add('audio-container');
+
+					// Create audio element
+					const audio = document.createElement('audio');
+					audio.controls = true;
+					audio.src = item.url; // Assuming 'url' is the key for audio URLs in your API response
+
+					// Create elements to display associated data
+					const title = document.createElement('p');
+					title.textContent = `Title: ${item.Key}`; // Displaying Key as title
+
+					const lastModified = document.createElement('p');
+					lastModified.textContent = `Last Modified: ${item.LastModified}`;
+
+					const size = document.createElement('p');
+					size.textContent = `Size: ${item.Size} bytes`;
+
+					// Append audio player and data elements to the container
+					audioContainer.appendChild(title);
+					audioContainer.appendChild(lastModified);
+					audioContainer.appendChild(size);
+					audioContainer.appendChild(audio);
+					audioListContainer.appendChild(audioContainer);
+				});
+			})
+			.catch(error => {
+				console.error('Error fetching data:', error);
+			});
+	</script>
+</body>
+</html>
