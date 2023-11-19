@@ -41,6 +41,6 @@ export default async (req, res) => {
 
     return res
       .status(200)
-      .send(`https://${process.env.C_AWS_BUCKET_NAME}.s3.amazonaws.com/${req.file.originalname}`);
+      .send(`https://${process.env.C_AWS_BUCKET_NAME}.s3.amazonaws.com/${req.files[0].originalname}`);
   });
 };
