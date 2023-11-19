@@ -59,7 +59,6 @@
           src="https://michigan-magic.vercel.app/bgaudio.mp3"
         ></audio>
         <audio
-          loop="false"
           id="uploadHere"
           src="https://michigan-magic.vercel.app/uploadHere.mp3"
         ></audio>
@@ -366,18 +365,18 @@
       }
 
       console.log("Recording started");
-
       
       var audio3 = document.getElementById("uploadHere");
-      audio3.play();
       
+      audio3.play();
+ 
+    
       setTimeout(function () {
-        //start recording using the audio recording API
+        audio3.pause()
         audioRecorder
           .start()
           .then(() => {
             //on success
-
             //store the recording start time to display the elapsed time according to it
             audioRecordStartTime = new Date();
           })
@@ -416,7 +415,7 @@
                 );
             }
           });
-      }, 15300);
+      }, 15000);
     }
     }
     let total = 0;
